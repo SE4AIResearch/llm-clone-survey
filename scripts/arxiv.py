@@ -21,7 +21,23 @@ def get_text(element, tag):
     return found_element.text.strip()
 
 
-def search_arxiv(query, start=0, batch_size=1000):
+def get_arxiv_doi(paper_id):
+    paper_id = paper_id.split("v")[0]  # Remove the version number
+    return f'10.48550/arXiv.{paper_id}'
+
+
+def doi_to_bibtex(doi):
+    url = f"https://doi.org/{doi}"
+    headers = {
+        'Accept': 'application/x-bibtex'
+    }
+    response = requests.get(url, headers=headers)
+    # response.raise_for_status()
+    bibtex = response.text
+    return bibtex
+
+
+def search_arxiv(query, start=0, batch_size=200):
     base_url = "http://export.arxiv.org/api/query"
     papers = []
 
@@ -49,11 +65,12 @@ def search_arxiv(query, start=0, batch_size=1000):
             title = entry.find('{http://www.w3.org/2005/Atom}title').text.strip()
             summary = entry.find('{http://www.w3.org/2005/Atom}summary').text.strip()
             id_url = entry.find('{http://www.w3.org/2005/Atom}id').text.strip()
-            # doi = entry.find('{http://arxiv.org/schemas/atom}doi')
-            doi = get_text(entry, '{http://arxiv.org/schemas/atom}doi')  # None if doi is None else doi.text.strip()
             published = entry.find('{http://www.w3.org/2005/Atom}published').text.strip()
             paper_id = id_url.split('/abs/')[-1] if '/abs/' in id_url else None
             pdf_url = id_url.replace('/abs/', '/pdf/') + ".pdf" if paper_id else None
+            doi = get_text(entry, '{http://arxiv.org/schemas/atom}doi')
+            if doi is None:
+                doi = get_arxiv_doi(paper_id)
 
             papers.append({
                 'title': title,
@@ -61,6 +78,7 @@ def search_arxiv(query, start=0, batch_size=1000):
                 'doi': doi,
                 'pdf_url': pdf_url,
                 'published': published,
+                "bibtex": doi_to_bibtex(doi) if doi else ""
             })
 
         start += batch_size
@@ -71,9 +89,10 @@ def search_arxiv(query, start=0, batch_size=1000):
 def save_papers(papers, filename):
     with open(filename, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow(['doi', 'url', 'title', 'abstract', 'published'])
+        writer.writerow(['doi', 'url', 'title', 'abstract', 'published', 'bibtex'])
         for paper in papers:
-            writer.writerow([paper['doi'], paper['pdf_url'], paper['title'], paper['summary'], paper['published']])
+            writer.writerow(
+                [paper['doi'], paper['pdf_url'], paper['title'], paper['summary'], paper['published'], paper['bibtex']])
 
 
 if __name__ == "__main__":
