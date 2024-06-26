@@ -1,6 +1,7 @@
 import csv
 import pathlib
 import xml.etree.ElementTree as ET
+from datetime import datetime
 
 import requests
 
@@ -8,10 +9,19 @@ OUTPUT_FILE = pathlib.Path(__file__).parent.parent / 'results' / 'arxiv.csv'
 
 NAMESPACE = {
     'atom': 'http://www.w3.org/2005/Atom',  # Commonly used prefix for the Atom namespace
-    'arxiv': 'http://arxiv.org/schemas/atom'  # Prefix for the ArXiv-specific namespace
+    'arxiv': 'http://arxiv.org/schemas/atom',  # Prefix for the ArXiv-specific namespace
+    'opensearch': "http://a9.com/-/spec/opensearch/1.1/"  # Prefix for the OpenSearch-specific namespace
 }
 
-def search_arxiv(query, start=0, batch_size=100):
+
+def get_text(element, tag):
+    found_element = element.find(tag)
+    if found_element is None:
+        return None
+    return found_element.text.strip()
+
+
+def search_arxiv(query, start=0, batch_size=1000):
     base_url = "http://export.arxiv.org/api/query"
     papers = []
 
@@ -20,7 +30,7 @@ def search_arxiv(query, start=0, batch_size=100):
             "search_query": query,
             "start": start,
             "max_results": batch_size,
-            "sortBy": "relevance",
+            # "sortBy": "relevance",
             # "sortBy": "submittedDate",
             # "sortOrder": "descending",
         }
@@ -36,15 +46,15 @@ def search_arxiv(query, start=0, batch_size=100):
             break  # If no more entries, exit the loop
 
         for entry in entries:
-
             title = entry.find('{http://www.w3.org/2005/Atom}title').text.strip()
             summary = entry.find('{http://www.w3.org/2005/Atom}summary').text.strip()
             id_url = entry.find('{http://www.w3.org/2005/Atom}id').text.strip()
-            doi =  entry.find('{http://arxiv.org/schemas/atom}doi').text.strip() if entry.find('{http://arxiv.org/schemas/atom}doi') else None
+            # doi = entry.find('{http://arxiv.org/schemas/atom}doi')
+            doi = get_text(entry, '{http://arxiv.org/schemas/atom}doi')  # None if doi is None else doi.text.strip()
             published = entry.find('{http://www.w3.org/2005/Atom}published').text.strip()
             paper_id = id_url.split('/abs/')[-1] if '/abs/' in id_url else None
             pdf_url = id_url.replace('/abs/', '/pdf/') + ".pdf" if paper_id else None
-            print("DOI",doi)
+
             papers.append({
                 'title': title,
                 'summary': summary,
@@ -61,17 +71,21 @@ def search_arxiv(query, start=0, batch_size=100):
 def save_papers(papers, filename):
     with open(filename, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow(['doi', 'url','title', 'abstract', 'published'])
+        writer.writerow(['doi', 'url', 'title', 'abstract', 'published'])
         for paper in papers:
-            writer.writerow([paper['doi'], paper['pdf_url'],paper['title'], paper['summary'], paper['published']])
-
-
-def main():
-    query = '(((("software engineering" OR "programming" OR "software development" OR "computer science" OR "computer engineering") AND ("education" OR "learning")) AND ("LLM" OR "large language model")))'
-    papers = search_arxiv(query)
-    print(f"Found {len(papers)} papers")
-    save_papers(papers, OUTPUT_FILE)
+            writer.writerow([paper['doi'], paper['pdf_url'], paper['title'], paper['summary'], paper['published']])
 
 
 if __name__ == "__main__":
-    main()
+    timestamp = str(datetime.now()).split('.')[0].replace(' ', '_').replace(':', '-')
+    query = (
+        '(all:"software engineering" OR all:programming OR all:"software development" OR all:"computer science" OR all:"computer engineering")'
+        ' AND '
+        # '(all:education OR all:learning)'
+        # '(all:education OR all:teaching OR all:literacy)'
+        '(all:education OR all:teaching)'
+        ' AND '
+        '(all:LLM OR all:"large language model")')
+    papers = search_arxiv(query)
+    print(f"Found {len(papers)} papers")
+    save_papers(papers, str(OUTPUT_FILE).replace('.csv', f'_{timestamp}.csv'))
