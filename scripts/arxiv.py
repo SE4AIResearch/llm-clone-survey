@@ -5,6 +5,8 @@ from datetime import datetime
 
 import requests
 
+from scripts.utils import doi_to_bibtex
+
 OUTPUT_FILE = pathlib.Path(__file__).parent.parent / 'results' / 'arxiv.csv'
 
 NAMESPACE = {
@@ -24,17 +26,6 @@ def get_text(element, tag):
 def get_arxiv_doi(paper_id):
     paper_id = paper_id.split("v")[0]  # Remove the version number
     return f'10.48550/arXiv.{paper_id}'
-
-
-def doi_to_bibtex(doi):
-    url = f"https://doi.org/{doi}"
-    headers = {
-        'Accept': 'application/x-bibtex'
-    }
-    response = requests.get(url, headers=headers)
-    # response.raise_for_status()
-    bibtex = response.text
-    return bibtex
 
 
 def search_arxiv(query, start=0, batch_size=200):

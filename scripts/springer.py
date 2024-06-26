@@ -13,8 +13,7 @@ URL = 'https://link.springer.com/search?new-search=true&query=%28%22software+eng
 
 def make_request(page_num):
     req = requests.get(URL + page_num)
-    content = req.content
-    return content
+    return req.content
 
 
 if __name__ == "__main__":
