@@ -17,22 +17,20 @@ for paper in df['Title']:
 
 df = df.drop_duplicates(subset=['Title'])
 
-f = open("duplicates.txt", "w")
+with open("duplicates.txt", "w") as f:
+
+    for paper in range(len(df['Title'])):
+        for compare in range(len(df['Title'])):
+            if paper != compare:
+                    edit_distance = distance(df.iloc[paper,1], df.iloc[compare,1])
+                    if edit_distance <= THRESHOLD:
+                        f.write("POSSIBLE DUPLICATES")
+                        og = str(paper) + " " + df.iloc[paper,1]
+                        compare = str(compare) + " " + df.iloc[compare,1]
+                        f.write(og)
+                        f.write(compare)
+                        f.write('\n')
+                        print('found')
 
 
-for paper in range(len(df['Title'])):
-    for compare in range(len(df['Title'])):
-        if paper != compare:
-                edit_distance = distance(df.iloc[paper,1], df.iloc[compare,1])
-                if edit_distance <= THRESHOLD:
-                    f.write("POSSIBLE DUPLICATES")
-                    og = str(paper) + " " + df.iloc[paper,1]
-                    compare = str(compare) + " " + df.iloc[compare,1]
-                    f.write(og)
-                    f.write(compare)
-                    f.write('\n')
-                    print('found')
 
-
-
-f.close()
