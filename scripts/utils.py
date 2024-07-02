@@ -2,6 +2,8 @@ import requests
 
 
 def doi_to_bibtex(doi):
+    if not doi:
+        return ""
     url = f"https://doi.org/{doi}"
     headers = {
         'Accept': 'application/x-bibtex'
