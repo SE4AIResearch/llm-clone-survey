@@ -22,7 +22,7 @@ def parse_bib_file_with_entries(file_path):
     return pd.DataFrame(parsed_entries), bib_entries
 
 # Parse the two uploaded .bib files
-acm_df, acm_bib_entries = parse_bib_file_with_entries('../results/acm_export2024.06.26-17.35.bib')
+acm_df, acm_bib_entries = parse_bib_file_with_entries('../results/acm_export2024.07.02-16.14.bib')
 sciencedirect_df, sciencedirect_bib_entries = parse_bib_file_with_entries('../results/ScienceDirect_2024-06-26_17-18-04.bib')
 
 # Add the 'bibtex' column
@@ -38,7 +38,7 @@ sciencedirect_df['title'] = sciencedirect_df['title'].astype(str)
 # import ace_tools as tools; tools.display_dataframe_to_user(name="ScienceDirect Export Data with BibTeX", dataframe=sciencedirect_df)
 
 # Save the DataFrames as CSV files with BibTeX
-acm_csv_path = '../results/acm_export2024.06.26-17.35.csv'
+acm_csv_path = '../results/acm_export2024.07.02-16.14.csv'
 sciencedirect_csv_path = '../results/ScienceDirect_2024-06-26_17-18-04.csv'
 
 acm_df.to_csv(acm_csv_path, index=False)
