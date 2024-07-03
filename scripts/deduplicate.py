@@ -2,7 +2,7 @@ import sqlite3
 
 from Levenshtein import distance
 
-THRESHOLD = 5
+THRESHOLD = 10
 if __name__ == "__main__":
     # Connect to the SQLite database
     conn = sqlite3.connect('../../coding_website/db_llm_education_survey.sqlite3')
