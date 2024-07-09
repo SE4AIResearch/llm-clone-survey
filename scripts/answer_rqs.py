@@ -1,5 +1,6 @@
 """
-Utility script to answer the paper's research questions
+Utility script to answer the paper's research questions.
+@author: Joanna C. S. Santos
 """
 from utils import get_all_relevant_papers, get_languages, get_llms, get_educational_level, get_educational_outcomes, \
     get_research_methodologies
