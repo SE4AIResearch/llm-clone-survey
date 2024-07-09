@@ -67,4 +67,4 @@ if __name__ == "__main__":
     # rq2_llms(relevant_papers)
     # rq3_educational_levels(relevant_papers)
     # rq4_educational_outcomes(relevant_papers)
-    rq5_methodologies(relevant_papers)
+    # rq5_methodologies(relevant_papers)
