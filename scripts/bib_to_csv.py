@@ -21,31 +21,33 @@ def parse_bib_file_with_entries(file_path):
 
     return pd.DataFrame(parsed_entries), bib_entries
 
-# Parse the two uploaded .bib files
-acm_df, acm_bib_entries = parse_bib_file_with_entries('../results/acm_export2024.07.02-16.14.bib')
-sciencedirect_df, sciencedirect_bib_entries = parse_bib_file_with_entries('../results/ScienceDirect_2024-06-26_17-18-04.bib')
+if __name__ == '__main__':
 
-# Add the 'bibtex' column
-acm_df['bibtex'] = acm_bib_entries
-sciencedirect_df['bibtex'] = sciencedirect_bib_entries
+    # Parse the two uploaded .bib files
+    acm_df, acm_bib_entries = parse_bib_file_with_entries('../results/acm_export2024.07.02-16.14.bib')
+    sciencedirect_df, sciencedirect_bib_entries = parse_bib_file_with_entries('../results/ScienceDirect_2024-06-26_17-18-04.bib')
 
-# Convert necessary columns to string type if needed
-# For demonstration, converting 'title' column to string type
-acm_df['title'] = acm_df['title'].astype(str)
-sciencedirect_df['title'] = sciencedirect_df['title'].astype(str)
+    # Add the 'bibtex' column
+    acm_df['bibtex'] = acm_bib_entries
+    sciencedirect_df['bibtex'] = sciencedirect_bib_entries
 
-# import ace_tools as tools; tools.display_dataframe_to_user(name="ACM Export Data with BibTeX", dataframe=acm_df)
-# import ace_tools as tools; tools.display_dataframe_to_user(name="ScienceDirect Export Data with BibTeX", dataframe=sciencedirect_df)
+    # Convert necessary columns to string type if needed
+    # For demonstration, converting 'title' column to string type
+    acm_df['title'] = acm_df['title'].astype(str)
+    sciencedirect_df['title'] = sciencedirect_df['title'].astype(str)
 
-# Save the DataFrames as CSV files with BibTeX
-acm_csv_path = '../results/acm_export2024.07.02-16.14.csv'
-sciencedirect_csv_path = '../results/ScienceDirect_2024-06-26_17-18-04.csv'
+    # import ace_tools as tools; tools.display_dataframe_to_user(name="ACM Export Data with BibTeX", dataframe=acm_df)
+    # import ace_tools as tools; tools.display_dataframe_to_user(name="ScienceDirect Export Data with BibTeX", dataframe=sciencedirect_df)
 
-acm_df.to_csv(acm_csv_path, index=False)
-sciencedirect_df.to_csv(sciencedirect_csv_path, index=False)
+    # Save the DataFrames as CSV files with BibTeX
+    acm_csv_path = '../results/acm_export2024.07.02-16.14.csv'
+    sciencedirect_csv_path = '../results/ScienceDirect_2024-06-26_17-18-04.csv'
+
+    acm_df.to_csv(acm_csv_path, index=False)
+    sciencedirect_df.to_csv(sciencedirect_csv_path, index=False)
 
 
-print("ACM Export Data with BibTeX:")
-print(acm_df.head())
-print("\nScienceDirect Export Data with BibTeX:")
-print(sciencedirect_df.head())
+    print("ACM Export Data with BibTeX:")
+    print(acm_df.head())
+    print("\nScienceDirect Export Data with BibTeX:")
+    print(sciencedirect_df.head())

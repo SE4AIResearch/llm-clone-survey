@@ -2,9 +2,9 @@
 Utility script to answer RQ3.
 @author: Joanna C. S. Santos
 """
-from utils import get_educational_level, get_all_relevant_papers
 from collections import defaultdict
 
+from utils import get_educational_level, get_all_relevant_papers
 
 
 def get_bibid(bibtex: str) -> str:
@@ -15,21 +15,22 @@ def get_bibid(bibtex: str) -> str:
     """
     if not bibtex:
         raise ValueError("Bibtex is empty.")
-    return bibtex.split("{")[1].split(",")[0]
+    return bibtex.strip().split("{")[1].split(",")[0]
 
-def rq3_edu_levels(papers: list):
-    # count of papers per educational level and the citations (bibtex field)
-    # key: educational level, value: (count, list of bibkeys)
+
+def rq3_edu_levels(papers: list) -> dict:
+    # count papers per educational level and the citations (bibtex field)
+    # key: educational level, value: (total, list of bibkeys)
     edu_levels_count = defaultdict(lambda: (0, []))
 
     # iterate data frame rows
     for _, row in papers.iterrows():
         # get the educational levels
         educational_levels = get_educational_level(row['paper_id'])
-        for edu_level in educational_levels:
-            count, bibkeys = edu_levels_count[edu_level]
+        for level in educational_levels:
+            total, bibkeys = edu_levels_count[level]
             bibkeys.append(get_bibid(row['bibtex']))
-            edu_levels_count[edu_level] = (count + 1, bibkeys)
+            edu_levels_count[level] = (total + 1, bibkeys)
 
     return edu_levels_count
 
@@ -43,4 +44,3 @@ if __name__ == '__main__':
         latex_citation = "\cite{" + ','.join(citations) + "}"
         percentage = (count / len(papers)) * 100
         print(f"\t{edu_level} & {count} ({percentage:.1f}\\%) & {latex_citation} \\\\")
-
