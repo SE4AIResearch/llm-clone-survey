@@ -3,13 +3,15 @@ from pathlib import Path
 
 import pandas as pd
 import requests
+from pybtex.database.input import bibtex as pb
+from unidecode import unidecode
 
 DATABASE_LOCATION = Path("../data/db_llm_education_survey.sqlite3")
 
 
 def get_metadata(paper_id: int, metadata_name: str) -> dict:
     many_to_many_table_name = f"llm_education_survey_analysis_{metadata_name}s"
-    if  "methodology" in metadata_name:
+    if "methodology" in metadata_name:
         many_to_many_table_name = f"llm_education_survey_analysis_research_methodologies"
     table_name = f"llm_education_survey_{metadata_name.replace('_', '')}"
     column_id_name = f"{metadata_name.replace('_', '')}_id"
@@ -36,18 +38,21 @@ def get_languages(paper_id: int) -> []:
     return get_metadata(paper_id, "language")
 
 
-
 def get_llms(paper_id: int) -> []:
     return get_metadata(paper_id, "llm")
+
 
 def get_educational_level(paper_id: int) -> []:
     return get_metadata(paper_id, "educational_level")
 
+
 def get_research_methodologies(paper_id: int) -> []:
     return get_metadata(paper_id, "research_methodology")
 
+
 def get_disciplines(paper_id: int) -> []:
     return get_metadata(paper_id, "discipline")
+
 
 def get_educational_outcomes(paper_id: int) -> []:
     return get_metadata(paper_id, "educational_outcome")
@@ -55,7 +60,7 @@ def get_educational_outcomes(paper_id: int) -> []:
 
 def get_all_relevant_papers() -> pd.DataFrame:
     # Connect to the SQLite database
-    conn = sqlite3.connect('../../coding_website/db_llm_education_survey.sqlite3')
+    conn = sqlite3.connect('../data/db_llm_education_survey.sqlite3')
 
     # Create a cursor object
     cursor = conn.cursor()
@@ -112,5 +117,79 @@ def doi_to_abstract(doi: str) -> str:
     except requests.exceptions.RequestException as e:
         return f"An error occurred when retrieving abstract: {e}"
 
+
 # print(doi_to_abstract("10.1007/s10515-024-00436-x"))  # Should return the abstract of the paper
 # print(doi_to_abstract("10.1007/978-3-031-46002-9_23"))
+def get_bibid(bibtex: str) -> str:
+    """
+    Given the full bibtex, extract the ID.
+    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
+    :return: returns the ID (ex: DBLP:journals/corr/abs-2103-03404)
+    """
+    if not bibtex:
+        raise ValueError("Bibtex is empty.")
+    bibtex_id = bibtex.strip().split("{")[1].split(",")[0]
+    if not bibtex_id:
+        raise ValueError("Bibtex ID is empty.")
+    return bibtex_id
+
+
+def parse_bibtex(bibtex: str) -> dict:
+    """
+    Parse the bibtex string.
+    :param bibtex:
+    :return:
+    """
+    try:
+        parser = pb.Parser()
+        # return the first entry
+        entries = parser.parse_string(bibtex).entries
+        for _, entry in entries.items():
+            return entry
+
+    except Exception as e:
+        raise ValueError("Bibtex could not be parsed. \n" + bibtex)
+
+
+def get_first_author(parsed_bib) -> str:
+    """
+    Given the full bibtex, extract the first author.
+    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
+    :return: the first author's last name (ex: "smith")
+    This removes accents from the author's last name and replace with closes ASCII character.
+    """
+    return unidecode("".join(parsed_bib.persons['author'][0].last_names).lower())
+
+def get_first_title_word(parsed_bib: pb.Entry) -> str:
+    """
+    Given the full bibtex, extract the first word in the title.
+    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
+    :return: the first word in the title
+    """
+    if not parsed_bib:
+        raise ValueError("Bibtex could not be parsed.")
+
+    for word in parsed_bib.fields['title'].lower().split():
+        if word not in ['and', 'or', 'the', 'a', 'an', 'what', 'which', 'how', 'why', 'when', 'where','from','to','on', 'in']:
+            # remove accents from the word and replace with closest ASCII character
+            return unidecode(word).replace(":","").replace("-","")
+
+
+def clean(bibtex: str) -> str:
+    """
+    Clean the bibtex string by removing accents and extra spaces.
+    :param bibtex:
+    :return:
+    """
+    # remove non-alphanumeric
+    bibtex = "".join([x for x in bibtex if x.isalnum()])
+    return unidecode(bibtex).strip()
+
+def generate_bibtex_id(bibtex: str) -> str:
+    """
+    Generate a standardized bibtex ID based on the first author, year, and first word in the title.
+    :param bibtex:
+    :return:
+    """
+    parsed_bib = parse_bibtex(bibtex)
+    return clean(get_first_author(parsed_bib) + parsed_bib.fields['year'] + get_first_title_word(parsed_bib))

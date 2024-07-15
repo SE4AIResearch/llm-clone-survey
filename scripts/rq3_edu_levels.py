@@ -4,18 +4,8 @@ Utility script to answer RQ3.
 """
 from collections import defaultdict
 
+from scripts.utils import get_bibid, generate_bibtex_id
 from utils import get_educational_level, get_all_relevant_papers
-
-
-def get_bibid(bibtex: str) -> str:
-    """
-    Given the full bibtex, extract the ID.
-    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
-    :return: returns the ID (ex: DBLP:journals/corr/abs-2103-03404)
-    """
-    if not bibtex:
-        raise ValueError("Bibtex is empty.")
-    return bibtex.strip().split("{")[1].split(",")[0]
 
 
 def rq3_edu_levels(papers: list) -> dict:
@@ -29,7 +19,7 @@ def rq3_edu_levels(papers: list) -> dict:
         educational_levels = get_educational_level(row['paper_id'])
         for level in educational_levels:
             total, bibkeys = edu_levels_count[level]
-            bibkeys.append(get_bibid(row['bibtex']))
+            bibkeys.append(generate_bibtex_id(row['bibtex']))
             edu_levels_count[level] = (total + 1, bibkeys)
 
     return edu_levels_count
