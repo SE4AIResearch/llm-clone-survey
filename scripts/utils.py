@@ -61,13 +61,13 @@ def get_all_relevant_papers() -> pd.DataFrame:
     cursor = conn.cursor()
 
     # Execute a SQL query
-    cursor.execute('SELECT paper_id, title, abstract, source FROM llm_education_survey_paper JOIN '
+    cursor.execute('SELECT paper_id, title, abstract, source, bibtex FROM llm_education_survey_paper JOIN '
                    'llm_education_survey_analysis ON llm_education_survey_paper.id = llm_education_survey_analysis.paper_id '
                    'WHERE is_relevant = 1 AND user_id = 15')
 
     # fetch all the results in a data frame
     rows = cursor.fetchall()
-    return pd.DataFrame(rows, columns=['paper_id', 'title', 'abstract', 'source'])
+    return pd.DataFrame(rows, columns=['paper_id', 'title', 'abstract', 'source', 'bibtex'])
 
 
 def doi_to_bibtex(doi):
