@@ -188,8 +188,28 @@ def clean(bibtex: str) -> str:
 def generate_bibtex_id(bibtex: str) -> str:
     """
     Generate a standardized bibtex ID based on the first author, year, and first word in the title.
-    :param bibtex:
-    :return:
+    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
+    :return: the standardized bibtex ID (ex: smith2021deep)
     """
     parsed_bib = parse_bibtex(bibtex)
     return clean(get_first_author(parsed_bib) + parsed_bib.fields['year'] + get_first_title_word(parsed_bib))
+
+
+def shorten_bibtex(bibtex: str)->str:
+    """
+    Given a full bibtex citationm, it abbreviates the authors. FOr example, JOanna C. S. Santos become J. C. S. SAntos
+    :param bibtex: the full bibtex (ex: @article{DBLP:journals/corr/abs-2103-03404, ...})
+    :return: the bibtex, but with abbreviated authors.
+    """
+    parsed_bib = parse_bibtex(bibtex)
+    authors = parsed_bib.persons['author']
+    for author in authors:
+        for i in range(len(author.first_names)):
+            author.first_names[i] = author.first_names[i][0] + "."
+            # remove "." from the last name if it exist as last character
+            if author.last_names[i][-1] == ".":
+                author.last_names[i] = author.last_names[i][:-1]
+
+    return parsed_bib.to_string("bibtex")
+
+
