@@ -8,8 +8,9 @@ Research that invents and evaluates technological artifacts.
 This standard applies to manuscripts that propose and evaluate technological artifacts, including algorithms, models, languages, methods, systems, tools, and other computer-based technologies. 
 
 This standard is not appropriate for: 
-     - evaluations of pre-existing engineering research approaches (consider the Experiments Standard)
-     - experience reports of applying pre-existing engineering research approaches.
+
+- evaluations of pre-existing engineering research approaches (consider the Experiments Standard)
+- experience reports of applying pre-existing engineering research approaches.
 
 ## ACM: Multi-Methodology and Mixed Methods Research
 Studies that use two or more approaches to data collection or analysis to corroborate, complement and expand research findings (multi-methodology) or combine and integrate inductive research with deductive research (mixed methods), often but not necessarily relying on qualitative and/or quantitative data.
