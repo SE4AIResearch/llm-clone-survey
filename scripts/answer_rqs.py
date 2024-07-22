@@ -57,8 +57,8 @@ def rq5_methodologies(papers: list):
     for _, row in papers.iterrows():
         # get the research methodologies
         methodologies = get_research_methodologies(row['paper_id'])
-        print(row['title'])
-        print("\t", methodologies)
+        print(row['title'].replace("\n"," ").replace("\t"," ").strip(), ",".join(methodologies), sep="\t")
+
 
 
 if __name__ == "__main__":
@@ -68,4 +68,4 @@ if __name__ == "__main__":
     # rq2_llms(relevant_papers)
     # rq3_educational_levels(relevant_papers)
     # rq4_educational_outcomes(relevant_papers)
-    # rq5_methodologies(relevant_papers)
+    rq5_methodologies(relevant_papers)
