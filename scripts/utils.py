@@ -9,6 +9,20 @@ from unidecode import unidecode
 DATABASE_LOCATION = Path("../data/db_llm_education_survey.sqlite3")
 
 
+def get_paper_type(paper_id: int) -> str:
+    # Connect to the SQLite database
+    conn = sqlite3.connect(DATABASE_LOCATION)
+
+    # Create a cursor object
+    cursor = conn.cursor()
+
+    # Execute a SQL query
+    cursor.execute('SELECT type FROM llm_education_survey_analysis WHERE paper_id = ?', (paper_id,))
+
+    # fetch all the results
+    rows = cursor.fetchall()
+    return rows[0][0]
+
 def get_metadata(paper_id: int, metadata_name: str) -> dict:
     many_to_many_table_name = f"llm_education_survey_analysis_{metadata_name}s"
     if "methodology" in metadata_name:
@@ -66,13 +80,13 @@ def get_all_relevant_papers() -> pd.DataFrame:
     cursor = conn.cursor()
 
     # Execute a SQL query
-    cursor.execute('SELECT paper_id, title, abstract, source, bibtex FROM llm_education_survey_paper JOIN '
+    cursor.execute('SELECT paper_id, title, abstract, source, bibtex, type FROM llm_education_survey_paper JOIN '
                    'llm_education_survey_analysis ON llm_education_survey_paper.id = llm_education_survey_analysis.paper_id '
                    'WHERE is_relevant = 1 AND user_id = 15')
 
     # fetch all the results in a data frame
     rows = cursor.fetchall()
-    return pd.DataFrame(rows, columns=['paper_id', 'title', 'abstract', 'source', 'bibtex'])
+    return pd.DataFrame(rows, columns=['paper_id', 'title', 'abstract', 'source', 'bibtex', 'type'])
 
 
 def doi_to_bibtex(doi):
