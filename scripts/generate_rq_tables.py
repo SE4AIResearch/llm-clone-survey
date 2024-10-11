@@ -8,18 +8,20 @@ from utils import generate_bibtex_id, get_disciplines, get_research_methodologie
 from utils import get_educational_level, get_all_relevant_papers
 from utils import get_languages
 
-TABLE_HEADER_WITH_CITATIONS = """\\begin{table}[ht]
+TABLE_HEADER_WITH_CITATIONS = """\\begin{table}[!htbp]
+    \\footnotesize
     \\centering
     \\caption{<<CAPTION>>}
-    \\begin{tabular}{l c p{4cm}}
+    \\begin{tabular}{@{}l c p{4cm}@{}}
         \\toprule
-        \\textbf{<<NAME>>} & \\textbf{\\# Papers} & \\textbf{Papers} \\\\
+        \\textbf{<<NAME>>} & \\textbf{\\# Papers} & \\textbf{References} \\\\
         \\midrule\n"""
 
 TABLE_HEADER_NO_CITATIONS = """\\begin{table}[ht]
+    \\footnotesize
     \\centering
     \\caption{<<CAPTION>>}
-    \\begin{tabular}{l c}
+    \\begin{tabular}{@{}l c@{}}
         \\toprule
         \\textbf{<<NAME>>} & \\textbf{\\# Papers} \\\\
         \\midrule\n"""
@@ -58,10 +60,12 @@ def save_table(rq_table: dict, output_file: str, caption: str, name: str, table_
     with(open(output_file, "w")) as f:
         f.write(table_header)
         for row_name, (count, citations) in rq_table.items():
+            # if count >= 3: # ignore rows with less than 3 papers
+            #     continue
             percentage = (count / len(papers)) * 100
             latex_citation = "\cite{" + ','.join(sorted(citations)) + "}"
             if with_citations:
-                f.write(f"\t\t{row_name} & {count} ({percentage:.1f}\\%) & {latex_citation} \\\\\n")
+                f.write(f"\t\t{row_name} & {count} & {latex_citation} \\\\\n")
             else:
                 # f.write(f"\t\t% {row_name}~{latex_citation}\n")
                 f.write(f"\t\t{row_name} & {count} \\\\\n")
@@ -82,14 +86,14 @@ if __name__ == '__main__':
     rq1_name = "Educational Level"
     rq1_table_id = "edu_level"
     save_table(rq1_table, rq1_output_file, rq1_caption, rq1_name, rq1_table_id, False)
-
+    save_table(rq1_table, rq1_output_file.replace(".tex", "_with_citations.tex"), rq1_caption, rq1_name, rq1_table_id, True)
     # Disciplines
     rq2_table = rq_table(papers, get_disciplines)
     rq2_table = dict(sorted(rq2_table.items(), key=lambda x: x[1][0], reverse=True))
     rq2_output_file = "../results/tables/rq2_disciplines.tex"
-    rq2_caption = "Distribution of Disciplines where LLMs are used in CS courses."
+    rq2_caption = "CS Disciplines Explored by the Studied Papers."
     rq2_name = "CS Discipline"
-    rq2_table_id = "discipline"
+    rq2_table_id = "disciplines"
     save_table(rq2_table, rq2_output_file, rq2_caption, rq2_name, rq2_table_id, False)
     save_table(rq2_table, rq2_output_file.replace(".tex", "_with_citations.tex"), rq2_caption, rq2_name, rq2_table_id,
                True)
@@ -98,7 +102,7 @@ if __name__ == '__main__':
     rq3_table = rq_table(papers, get_research_methodologies)
     rq3_table = dict(sorted(rq3_table.items(), key=lambda x: x[1][0], reverse=True))
     rq3_output_file = "../results/tables/rq3_research_methodologies.tex"
-    rq3_caption = "Distribution of Research Methodologies where LLMs are used in CS courses."
+    rq3_caption = "Research Methodologies used by the Papers."
     rq3_name = "Research Methodology"
     rq3_table_id = "methodologies"
     save_table(rq3_table, rq3_output_file, rq3_caption, rq3_name, rq3_table_id, False)
@@ -118,9 +122,9 @@ if __name__ == '__main__':
 
     # LLMs used
     rq5_table = rq_table(papers, get_llms)
-    rq5_table = dict(sorted(rq4_table.items(), key=lambda x: x[1][0], reverse=True))
+    rq5_table = dict(sorted(rq5_table.items(), key=lambda x: x[1][0], reverse=True))
     rq5_output_file = "../results/tables/rq5_llms.tex"
-    rq5_caption = "Distribution of LLMs used in CS courses."
+    rq5_caption = "Distribution of LLMs used by the papers."
     rq5_name = "LLM"
     rq5_table_id = "llms"
     save_table(rq5_table, rq5_output_file, rq5_caption, rq5_name, rq5_table_id, False)

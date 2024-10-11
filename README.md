@@ -22,7 +22,7 @@ If you use this code in your research, please cite the following paper:
 @inproceedings{nishat2025llmeducation,
   author={Raihan, Nishat and Siddiq, Mohammed Latif and Santos, Joanna C. S. and Zampieri, Marcos},
   title={Large Language Models in Computer Science Education: A Systematic Literature Review}, 
-  booktitle = {Proceedings of the 56th ACM Technical Symposium on Computer Science Education (SIGCSE TS '24)},
+  booktitle = {Proceedings of the 56th ACM Technical Symposium on Computer Science Education (SIGCSE TS '25)},
   numpages = {7},
   location = {Pittsburgh, Pennsylvania, United States},
   series = {SIGCSE TS '25}

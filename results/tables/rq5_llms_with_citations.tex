@@ -1,62 +1,50 @@
-\begin{table}[ht]
+\begin{table}[!htbp]
+    \footnotesize
     \centering
-    \caption{Distribution of LLMs used in CS courses.}
-    \begin{tabular}{l c p{4cm}}
+    \caption{Distribution of LLMs used by the papers.}
+    \begin{tabular}{@{}l c p{4cm}@{}}
         \toprule
-        \textbf{LLM} & \textbf{\# Papers} & \textbf{Papers} \\
+        \textbf{LLM} & \textbf{\# Papers} & \textbf{References} \\
         \midrule
-		Python & 69 (54.8\%) & \cite{abolnejadian2024leveraging,agarwal2024which,ahmed2024potentiality,anishka2023can,azaiz2023aienhanced,babe2023studenteval,bakas2024integrating,balse2023evaluating,balse2023investigating,budhiraja2024its,cambaz2024use,delcarpiogutierrez2024evaluating,denny2023conversing,denny2024prompt,doughty2024comparative,drori2023human,ellis2024chatgpt,fernandez2024cs1,garg2024impact,gumina2023teaching,jacobs2024evaluating,jin2024teach,jordan2024need,joshi2024chatgpt,jury2024evaluating,karnalim2024detecting,kazemitabaar2023studying,kazemitabaar2024novices,kiesler2023large,kirova2024software,koutcheme2023training,kruger2024performance,kuramitsu2023kogi,lau2023ban,li2023evaluating,liu2024beyond,liu2024teaching,lyu2024evaluating,ma2024teach,manley2024examining,nguyen2024beginning,oosterwyk2024beyond,padiyath2024insights,piccolo2023evaluating,prather2023robots,prather2024interactions,raihan2024cseprompts,reiche2024bridging,rodriguezecheverria2024analysis,roest2024nextstep,sanchez2023assessing,sarsa2022automatic,sarshartehrani2024enhancing,savelka2023efficient,savelka2023thrilled,savelka2024gpt3,scholl2024analyzing,sharpe2024can,sheese2024patterns,shen2024implications,ta2023exgen,tu2023should,vadaparty2024cs1llm,venkatesh2023evaluating,wan2024automated,wang2023exploring,wolfer2024qualitative,xiao2024qacp,zheng2023chatgpt} \\
-		Java & 21 (16.7\%) & \cite{agarwal2024which,aviv2024impact,azaiz2024feedbackgeneration,cambaz2024use,cipriano2023gpt3,cipriano2024llms,estevezayres2024evaluation,gumina2023teaching,haindl2024students,hanifi2023chatgpt,hoq2024detecting,jacobs2024evaluating,jalil2023chatgpt,kirova2024software,kruger2024performance,kumar2024using,lau2023ban,oli2024automated,rodriguezecheverria2024analysis,wolfer2024qualitative,zhang2023students} \\
-		Not Mentioned & 17 (13.5\%) & \cite{becker2023programming,berrezuetaguzman2023recommendations,bukar2024text,cao2023scaffolding,denny2024desirable,farah2023prompting,grover2024teaching,hou2024effects,kruger2024performance,li2023potential,orenstrakh2023detecting,parker2024large,petrovska2024incorporating,qureshi2023chatgpt,sterbini2024automated,strzelecki2024acceptance,zastudil2023generative} \\
-		Q&A & 13 (10.3\%) & \cite{dengel2023qualitative,drori2023human,fan2023exploring,feng2024more,freire2024may,gehringer2024dualsubmission,joshi2024chatgpt,mendoncca2024evaluating,oli2024automated,venkatesh2023evaluating,wang2024enhancing,xiao2024qacp,zhang2024assistant} \\
-		MCQs & 10 (7.9\%) & \cite{doughty2024comparative,feng2024more,grevisse2024comparative,grevisse2024docimological,kruger2024performance,mendoncca2024evaluating,raihan2024cseprompts,savelka2024gpt3,song2024automatic,tran2023generating} \\
-		C & 10 (7.9\%) & \cite{agarwal2024which,cambaz2024use,fan2023exploring,frankford2024aitutoring,kazemitabaar2024codeaid,kruger2024performance,lau2023ban,leinonen2023comparing,prather2023robots,rodriguezecheverria2024analysis} \\
-		C++ & 10 (7.9\%) & \cite{agarwal2024which,cambaz2024use,fan2023exploring,kosar2024computer,kruger2024performance,leinonen2023comparing,prather2023robots,rasnayaka2024empirical,rodriguezecheverria2024analysis,wolfer2024qualitative} \\
-		JavaScript & 7 (5.6\%) & \cite{gumina2023teaching,jost2024impact,kim2024chatgpt,kruger2024performance,macneil2023experiences,prather2023robots,rajala2023call} \\
-		CSS & 6 (4.8\%) & \cite{jost2024impact,kim2024chatgpt,kruger2024performance,prather2023robots,rajala2023call,wolfer2024qualitative} \\
-		HTML & 6 (4.8\%) & \cite{jost2024impact,kim2024chatgpt,kruger2024performance,prather2023robots,rajala2023call,wolfer2024qualitative} \\
-		SQL & 4 (3.2\%) & \cite{agarwal2024which,kruger2024performance,prakash2024integrating,prather2023robots} \\
-		C# & 3 (2.4\%) & \cite{kruger2024performance,pankiewicz2023large,prather2023robots} \\
-		R & 2 (1.6\%) & \cite{bien2024generative,kruger2024performance} \\
-		TypeScript & 2 (1.6\%) & \cite{kruger2024performance,tanay2024exploratory} \\
-		Java, Python, C etc. & 2 (1.6\%) & \cite{arora2024analyzing,liffiton2024codehelp} \\
-		ABAP & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Bash & 1 (0.8\%) & \cite{kruger2024performance} \\
-		COBOL & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Dart & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Delphi & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Fortran & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Go & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Groovy & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Haskell & 1 (0.8\%) & \cite{kruger2024performance} \\
-		JSON & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Julia & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Kotlin & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Lisp & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Lua & 1 (0.8\%) & \cite{kruger2024performance} \\
-		MATLAB & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Objective-C & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Perl & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Perl 6 & 1 (0.8\%) & \cite{kruger2024performance} \\
-		PHP & 1 (0.8\%) & \cite{kruger2024performance} \\
-		PL/SQL & 1 (0.8\%) & \cite{kruger2024performance} \\
-		PowerShell & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Prolog & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Racket & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Ruby & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Rust & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Scala & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Scratch & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Solidity & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Swift & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Visual Basic & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Visual Basic for Applications & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Verilog & 1 (0.8\%) & \cite{kruger2024performance} \\
-		VHDL & 1 (0.8\%) & \cite{kruger2024performance} \\
-		XML & 1 (0.8\%) & \cite{kruger2024performance} \\
-		YAML & 1 (0.8\%) & \cite{kruger2024performance} \\
-		Block Programming & 1 (0.8\%) & \cite{kazemitabaar2024novices} \\
-		TeX & 1 (0.8\%) & \cite{feng2024more} \\
+		ChatGPT & 66 & \cite{abolnejadian2024leveraging,agarwal2024which,ahmed2024potentiality,anishka2023can,arora2024analyzing,aviv2024impact,becker2023programming,berrezuetaguzman2023recommendations,budhiraja2024its,bukar2024text,dengel2023qualitative,denny2024prompt,drori2023human,ellis2024chatgpt,estevezayres2024evaluation,fernandez2024cs1,freire2024may,garg2024impact,gehringer2024dualsubmission,grevisse2024comparative,grevisse2024docimological,gumina2023teaching,haindl2024students,hanifi2023chatgpt,jalil2023chatgpt,jordan2024need,joshi2024chatgpt,jost2024impact,karnalim2024detecting,kiesler2023large,kim2024chatgpt,kirova2024software,kosar2024computer,kruger2024performance,lau2023ban,leinonen2023comparing,li2023evaluating,macneil2023experiences,manley2024examining,nguyen2024beginning,oosterwyk2024beyond,orenstrakh2023detecting,piccolo2023evaluating,prather2023robots,qureshi2023chatgpt,reiche2024bridging,rodriguezecheverria2024analysis,sanchez2023assessing,sarshartehrani2024enhancing,savelka2023efficient,savelka2024gpt3,scholl2024analyzing,sharpe2024can,sheese2024patterns,shen2024implications,song2024automatic,strzelecki2024acceptance,tanay2024exploratory,tran2023generating,tu2023should,vadaparty2024cs1llm,wang2023exploring,wolfer2024qualitative,zastudil2023generative,zhang2024assistant,zheng2023chatgpt} \\
+		GPT-3.5-Turbo & 32 & \cite{azaiz2023aienhanced,babe2023studenteval,bakas2024integrating,balse2023evaluating,drori2023human,farah2023prompting,frankford2024aitutoring,jin2024teach,jury2024evaluating,kazemitabaar2024codeaid,kumar2024using,kuramitsu2023kogi,li2023evaluating,liffiton2024codehelp,liu2024beyond,lyu2024evaluating,ma2024teach,nguyen2024beginning,pankiewicz2023large,parker2024large,prakash2024integrating,prather2023robots,prather2024interactions,raihan2024cseprompts,rajala2023call,roest2024nextstep,savelka2023efficient,savelka2024gpt3,sheese2024patterns,ta2023exgen,xiao2024qacp,zhang2023students} \\
+		GPT-4 & 25 & \cite{arora2024analyzing,azaiz2024feedbackgeneration,cipriano2024llms,delcarpiogutierrez2024evaluating,dengel2023qualitative,denny2024desirable,doughty2024comparative,fan2023exploring,feng2024more,jacobs2024evaluating,kiesler2023large,kirova2024software,kruger2024performance,kumar2024using,liu2024teaching,ma2024teach,nguyen2024beginning,oli2024automated,parker2024large,prather2023robots,savelka2023efficient,savelka2023thrilled,savelka2024gpt3,tran2023generating,xiao2024qacp} \\
+		GPT3 & 8 & \cite{balse2023investigating,cao2023scaffolding,cipriano2023gpt3,cipriano2024llms,li2023potential,liffiton2024codehelp,prakash2024integrating,prather2023robots} \\
+		CoPilot & 8 & \cite{arora2024analyzing,bien2024generative,denny2023conversing,lau2023ban,prather2023robots,rasnayaka2024empirical,tanay2024exploratory,venkatesh2023evaluating} \\
+		Codex & 6 & \cite{drori2023human,kazemitabaar2023studying,kazemitabaar2024novices,macneil2023experiences,nguyen2024beginning,sarsa2022automatic} \\
+		LLaMA-2 & 5 & \cite{oli2024automated,padiyath2024insights,prakash2024integrating,raihan2024cseprompts,xiao2024qacp} \\
+		BARD & 4 & \cite{agarwal2024which,cipriano2024llms,dengel2023qualitative,estevezayres2024evaluation} \\
+		BingAI & 2 & \cite{arora2024analyzing,kruger2024performance} \\
+		CodeBERT & 2 & \cite{oli2024automated,wan2024automated} \\
+		ChatGPT Plus & 2 & \cite{padiyath2024insights,rasnayaka2024empirical} \\
+		StarCoder & 2 & \cite{babe2023studenteval,raihan2024cseprompts} \\
+		Gemini & 2 & \cite{arora2024analyzing,xiao2024qacp} \\
+		CodeT5 & 1 & \cite{koutcheme2023training} \\
+		LLaMA-65B & 1 & \cite{kruger2024performance} \\
+		StableLM-7B & 1 & \cite{kruger2024performance} \\
+		LLaMA-7B & 1 & \cite{kruger2024performance} \\
+		BERTopic & 1 & \cite{sterbini2024automated} \\
+		ResNet + ChatGPT & 1 & \cite{wang2024enhancing} \\
+		ChatGPT + DL models & 1 & \cite{hoq2024detecting} \\
+		ChatGPT-4 Vision & 1 & \cite{mendoncca2024evaluating} \\
+		SantaCoder & 1 & \cite{babe2023studenteval} \\
+		Replit-Code & 1 & \cite{babe2023studenteval} \\
+		Star-Chat & 1 & \cite{babe2023studenteval} \\
+		GPT-4-Turbo & 1 & \cite{oli2024automated} \\
+		RoBERTa & 1 & \cite{oli2024automated} \\
+		text-da-vinci-003 & 1 & \cite{prather2024interactions} \\
+		Microsoft Copilot & 1 & \cite{agarwal2024which} \\
+		GitHub Copilot Cha & 1 & \cite{agarwal2024which} \\
+		Baichuan & 1 & \cite{xiao2024qacp} \\
+		ChatGLM & 1 & \cite{xiao2024qacp} \\
+		Qwen & 1 & \cite{xiao2024qacp} \\
+		Moonshot8 & 1 & \cite{xiao2024qacp} \\
+		Atom & 1 & \cite{xiao2024qacp} \\
+		Falcon & 1 & \cite{raihan2024cseprompts} \\
+		MPT & 1 & \cite{raihan2024cseprompts} \\
+		Code-Lamma & 1 & \cite{raihan2024cseprompts} \\
+		WizardCoder & 1 & \cite{raihan2024cseprompts} \\
+		Mistral & 1 & \cite{raihan2024cseprompts} \\
 	\bottomrule
     \end{tabular}
     \label{tab:llms}
