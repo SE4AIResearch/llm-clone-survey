@@ -41,7 +41,9 @@ If you use this code in your research, please cite the following paper:
 }
 ```
 
-# To run the springer and arxiv, need to install the following from cmd
+## To run the springer and arxiv, need to install the following from cmd
+
+```bash
 pip install selenium
 pip install requests
 pip install beautifulsoup4
