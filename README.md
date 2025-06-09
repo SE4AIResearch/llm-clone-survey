@@ -42,11 +42,11 @@ If you use this code in your research, please cite the following paper:
 ```
 
 #To run the springer and arxiv, need to install the following from cmd
-pip install selenium
-pip install requests
-pip install beautifulsoup4
-pip install pybtex
-pip install unidecode
+-pip install selenium
+-pip install requests
+-pip install beautifulsoup4
+-pip install pybtex
+-pip install unidecode
 
 #To run the bib to csv, import the bib to file to result folder, and run the code, go back to result, you should see the correspoding bib file got tranformed into csv
 
