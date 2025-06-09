@@ -51,6 +51,6 @@ pip install pybtex
 pip install unidecode
 
 
-#To run the bib to csv, import the bib to file to result folder, and run the code, go back to result, you should see the correspoding bib file got tranformed into csv
+##To run the bib to csv, import the bib to file to result folder, and run the code, go back to result, you should see the correspoding bib file got tranformed into csv
 
 
