@@ -7,11 +7,13 @@ import time
 
 OUTPUT_FILE = pathlib.Path(__file__).parent.parent / "results" / "springer.csv"
 #  ("software engineering" OR "programming" OR "software development" OR "computer science" OR "computer engineering") AND ("code clone" OR "duplicat" OR “clone” OR "redundant" OR "Repetitive") AND ("code") AND ("LLM" OR "large language model" OR “language model”) OR  “GenAI” OR “Gen AI”  OR “Generative AI” OR “GenerativeAI”)
-URL = "https://link.springer.com/search?new-search=true&query=%28%22software+engineering%22+OR+%22programming%22+OR+%22software+development%22+OR+%22computer+science%22+OR+%22computer+engineering%22%29+AND+%28%22code+clone%22+OR+%22duplicat%22+OR+%E2%80%9Cclone%E2%80%9D+OR+%22redundant%22+OR+%22Repetitive%22%29+AND+%28%22code%22%29+AND+%28%22LLM%22+OR+%22large+language+model%22+OR+%E2%80%9Clanguage+model%E2%80%9D%29+OR++%E2%80%9CGenAI%E2%80%9D+OR+%E2%80%9CGen+AI%E2%80%9D++OR+%E2%80%9CGenerative+AI%E2%80%9D+OR+%E2%80%9CGenerativeAI%E2%80%9D%29&dateFrom=&dateTo=&facet-discipline=%22Computer+Science%22&sortBy=relevance"
+BASE_URL = "https://link.springer.com/search?new-search=true&query=%28%22software+engineering%22+OR+%22programming%22+OR+%22software+development%22+OR+%22computer+science%22+OR+%22computer+engineering%22%29+AND+%28%22code+clone%22+OR+%22duplicat%22+OR+%22clone%22+OR+%22redundant%22+OR+%22Repetitive%22%29+AND+%28%22code%22%29+AND+%28%22LLM%22+OR+%22large+language+model%22+OR+%22language+model%22%29+OR+%22GenAI%22+OR+%22Gen+AI%22+OR+%22Generative+AI%22+OR+%22GenerativeAI%22&facet-discipline=%22Computer+Science%22&sortBy=relevance"
 
 
 def make_request(page_num):
-    return requests.get(URL + page_num).content
+
+    url = f"{BASE_URL}&page={page_num}"
+    return requests.get(url).content
 
 
 if __name__ == "__main__":
